@@ -17,21 +17,19 @@ function divide(x,y) {
     return x / y;
 };
 
-console.log(add(1,2));
-console.log(subtract(1,2));
-console.log(multiply(1,2));
-console.log(divide(1,2));
+const calcInput = [];
 
 function createButtons() {
     const buttons = document.querySelector("#buttons");
     const numbers = document.querySelector("#numbers");
     const operators = document.querySelector("#operators");
-    const ops = ["+", "-", "×", "÷"];
+    const ops = ["+", "-", "×", "÷", "="];
 
     for(let i = 0; i <= 9; i++) {
         const button = document.createElement("button");
         button.id = i;
         button.textContent = i;
+        button.addEventListener("click", function() {calcInput.push(i)});
         numbers.appendChild(button);
     };
 
@@ -39,8 +37,27 @@ function createButtons() {
         const button = document.createElement("button");
         button.id = i;
         button.textContent = i;
+        button.addEventListener("click", function() {calcInput.push(i)});
         operators.appendChild(button);
     });
 };
+
+function operate() {
+    const operator = calcInput.find((item) => item === ("+" || "-" || "×" || "÷"));
+    const calcString = calcInput.toString();
+
+    switch(operator) {
+        case "+":
+            break;
+        case "-":
+            break;
+        case "×":
+            break;
+        case "÷":
+            break;
+    };
+};
+
+
 
 createButtons();
