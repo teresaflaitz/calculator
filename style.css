@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#calculator {
+    display: flex;
+    flex-direction: column;
+}
+
+#screen {
+    display: flex;
+    background-color: grey;
+}
+
+#buttons {
+    display: flex;
+}
+
+#numbers {
+    display: flex;
+    flex-wrap: wrap;
+    width: 75px;
+}
+
+#operators {
+    display: flex;
+    flex-direction: column;
+}
