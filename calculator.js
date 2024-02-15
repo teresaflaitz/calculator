@@ -19,6 +19,7 @@ function divide(x,y) {
 
 const calcInput = [];
 const screen = document.querySelector("#screen");
+let resultDisplayed = false;
 
 function generateButtons() {
     generateNumButtons();
@@ -52,13 +53,17 @@ function populateButton(i) {
         else {
             button.addEventListener("click", function() {
                 calcInput.push(i)
+
+                if(resultDisplayed) {
+                    screen.textContent = "";
+                    resultDisplayed = false;
+                };
+
                 screen.textContent = screen.textContent + i;
             });
         };
     return button;
 };
-
-
 
 function operate() {
     //console.log(calcInput);
@@ -90,12 +95,7 @@ function operate() {
             break;
     };
     screen.textContent = result;
+    resultDisplayed = true;
 };
-
-function showResult() {
-
-};
-
-
 
 generateButtons();
