@@ -18,34 +18,47 @@ function divide(x,y) {
 };
 
 const calcInput = [];
+const screen = document.querySelector("#screen");
 
-function createButtons() {
-    const buttons = document.querySelector("#buttons");
+function generateButtons() {
+    generateNumButtons();
+    generateOpButtons();
+};
+
+function generateNumButtons() {
     const numbers = document.querySelector("#numbers");
+    
+    for(let i = 9; i >= 0; i--) {
+        numbers.appendChild(populateButton(i));
+    };
+};
+
+function generateOpButtons() {
     const operators = document.querySelector("#operators");
     const ops = ["+", "-", "×", "÷", "="];
 
-    for(let i = 0; i <= 9; i++) {
-        const button = document.createElement("button");
-        button.id = i;
-        button.textContent = i;
-        button.addEventListener("click", function() {calcInput.push(i)});
-        numbers.appendChild(button);
-    };
-
     ops.forEach((i) => {
-        const button = document.createElement("button");
+        operators.appendChild(populateButton(i));
+    });
+};
+
+function populateButton(i) {
+    const button = document.createElement("button");
         button.id = i;
         button.textContent = i;
         if (i === "=") {
             button.addEventListener("click", operate);
         }
         else {
-            button.addEventListener("click", function() {calcInput.push(i)});
+            button.addEventListener("click", function() {
+                calcInput.push(i)
+                screen.textContent = screen.textContent + i;
+            });
         };
-        operators.appendChild(button);
-    });
+    return button;
 };
+
+
 
 function operate() {
     //console.log(calcInput);
@@ -58,29 +71,31 @@ function operate() {
     
     let x = numArray[0];
     let y = numArray[1];
+    let result;
     
     calcInput.length = 0;
 
     switch(operator) {
         case "+":
-            console.log(add(x,y));
-            return add(x,y);
+            result = add(x,y);
             break;
         case "-":
-            console.log(subtract(x,y));
-            return subtract(x,y);
+            result = subtract(x,y);
             break;
         case "×":
-            console.log(multiply(x,y));
-            return multiply(x,y);
+            result = multiply(x,y);
             break;
         case "÷":
-            console.log(divide(x,y));
-            return divide(x,y);
+            result = divide(x,y);
             break;
     };
+    screen.textContent = result;
+};
+
+function showResult() {
+
 };
 
 
 
-createButtons();
+generateButtons();
