@@ -17,8 +17,9 @@ function divide(x,y) {
     return x / y;
 };
 
-const calcInput = [];
 const screen = document.querySelector("#screen");
+let newNumber = false;
+let operatorPressed = false;
 let resultDisplayed = false;
 
 function generateButtons() {
@@ -45,42 +46,73 @@ function generateOpButtons() {
 
 function populateButton(i) {
     const button = document.createElement("button");
-        button.id = i;
-        button.textContent = i;
-        if (i === "=") {
-            button.addEventListener("click", operate);
-        }
-        else {
-            button.addEventListener("click", function() {
-                calcInput.push(i)
+    button.id = i;
+    button.textContent = i;
+    if (i === "=") {
+        button.addEventListener("click", operate);
+    }
+    else if (!isNaN(i)) {
+        button.addEventListener("click", function() {
+            storeInput(i);
 
-                if(resultDisplayed) {
-                    screen.textContent = "";
-                    resultDisplayed = false;
-                };
+            if(resultDisplayed) {
+                screen.textContent = "";
+                resultDisplayed = false;
+            };
 
+            if(newNumber){
+                screen.textContent = i;
+                newNumber = false;
+            }
+            else {
                 screen.textContent = screen.textContent + i;
-            });
-        };
+            };
+            
+        });
+    }
+    else {
+        button.addEventListener("click", function() {
+            if(operatorPressed){
+                inputArr[0] = operate();
+                inputArr[2] = "";
+            }
+            
+            storeInput(i);
+            operatorPressed = true;
+            newNumber = true;
+        });
+    };
     return button;
 };
 
-function operate() {
-    //console.log(calcInput);
-    const operator = calcInput.find((item) => item === "+" || item === "-" || item === "×" || item === "÷");
-    //console.log(operator);
-    const calcString = calcInput.join("");
-    //console.log(calcString);
-    const numArray = calcString.split(operator);
-    //console.log(numArray);
+const inputArr = ["", "", ""];
     
-    let x = numArray[0];
-    let y = numArray[1];
-    let result;
-    
-    calcInput.length = 0;
 
-    switch(operator) {
+function storeInput(input) {
+    if (!isNaN(input) && inputArr[1] === "") {
+        inputArr[0]+=input;
+    }
+    else if (!isNaN(input) && inputArr[1] !== "") {
+        inputArr[2]+=input;
+    }
+    else {
+        inputArr[1]=input;
+    };
+};
+
+
+function operate() {
+    const op = inputArr[1];
+    const x = inputArr[0];
+    const y = inputArr[2];
+    
+    let result;
+
+    inputArr[0] = "";
+    inputArr[1] = "";
+    inputArr[2] = "";
+    
+    switch(op) {
         case "+":
             result = add(x,y);
             break;
@@ -94,8 +126,14 @@ function operate() {
             result = divide(x,y);
             break;
     };
+
     screen.textContent = result;
+
     resultDisplayed = true;
+    newNumber = true;
+    operatorPressed = false;
+
+    return result;
 };
 
 generateButtons();
