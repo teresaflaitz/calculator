@@ -13,12 +13,15 @@ body {
     font-size: 1rem;
     line-height: 1.5;
     margin: 0;
-    /*background: #c4e9f9;*/
+    background: #c4e9f9;
 }
 
 #calculator {
     display: flex;
     flex-direction: column;
+    background: #ffffff95;
+    border-radius: 0.75em;
+    padding: 10px;
 }
 
 #screen {
@@ -31,6 +34,7 @@ body {
     font-size: 6rem;
     text-align: end;
     padding: 20px;
+    margin: 20px;
 }
 
 #buttons {
@@ -48,7 +52,7 @@ button {
     font-family: inherit;
     font-weight: 600;
     color: #382b22;
-    padding: 1.25em 2em;
+    padding: 1em 2em;
     background: #fff0f0;
     border-radius: 0.75em;
     transform-style: preserve-3d;
